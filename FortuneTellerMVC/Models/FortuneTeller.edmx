@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FortuneTellerMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Firstame" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="BirthMonth" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FavoriteColor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumberOfSilbings" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fortune">
+          <Key>
+            <PropertyRef Name="FortuneID" />
+          </Key>
+          <Property Name="FortuneID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customer_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Customer1" Type="Self.Customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Customer1">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fortune_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Fortune" Type="Self.Fortune" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Fortune">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fortune_Fortune">
+          <End Role="Fortune" Type="Self.Fortune" Multiplicity="1" />
+          <End Role="Fortune1" Type="Self.Fortune" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Fortune">
+              <PropertyRef Name="FortuneID" />
+            </Principal>
+            <Dependent Role="Fortune1">
+              <PropertyRef Name="FortuneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FortuneTellerMVCModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fortune" EntityType="Self.Fortune" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_Customer" Association="Self.FK_Customer_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Customer1" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fortune_Customer" Association="Self.FK_Fortune_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Fortune" EntitySet="Fortune" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fortune_Fortune" Association="Self.FK_Fortune_Fortune">
+            <End Role="Fortune" EntitySet="Fortune" />
+            <End Role="Fortune1" EntitySet="Fortune" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FortuneTellerMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstame" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="BirthMonth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FavoriteColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumberOfSilbings" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Fortunes" Relationship="FortuneTellerMVCModel.FK_Fortune_Customer1" FromRole="Customer" ToRole="Fortune" />
+        </EntityType>
+        <EntityType Name="Fortune">
+          <Key>
+            <PropertyRef Name="FortuneID" />
+          </Key>
+          <Property Name="FortuneID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="FortuneTellerMVCModel.FK_Fortune_Customer1" FromRole="Fortune" ToRole="Customer" />
+          </EntityType>
+        <EntityContainer Name="FortuneTellerMVCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Fortunes" EntityType="Self.Fortune" />
+          <AssociationSet Name="FK_Fortune_Customer1" Association="FortuneTellerMVCModel.FK_Fortune_Customer1">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Fortune" EntitySet="Fortunes" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Fortune_Customer1">
+          <End Type="FortuneTellerMVCModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="FortuneTellerMVCModel.Fortune" Role="Fortune" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Fortune">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FortuneTellerMVCModelStoreContainer" CdmEntityContainer="FortuneTellerMVCEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="FortuneTellerMVCModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Firstame" ColumnName="Firstame" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="BirthMonth" ColumnName="BirthMonth" />
+                <ScalarProperty Name="FavoriteColor" ColumnName="FavoriteColor" />
+                <ScalarProperty Name="NumberOfSilbings" ColumnName="NumberOfSilbings" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fortunes">
+            <EntityTypeMapping TypeName="FortuneTellerMVCModel.Fortune">
+              <MappingFragment StoreEntitySet="Fortune">
+                <ScalarProperty Name="FortuneID" ColumnName="FortuneID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

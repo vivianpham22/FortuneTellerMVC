@@ -1,0 +1,70 @@
+﻿@model FortuneTellerMVC.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Firstame)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Firstame)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age) 
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthMonth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BirthMonth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FavoriteColor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FavoriteColor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfSilbings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfSilbings)
+        </dd>
+
+    </dl>  
+</div>
+
+    <p> <span>@Html.DisplayFor(model => model.Firstame) @Html.DisplayFor(model => model.LastName)</span> <p>will retire in <span>@ViewBag.retireAge</span> years</p> <p>with <span>@ViewBag.BirthMonth</span> in the bank,</p> <p>a vacation home in <span>@ViewBag.home</span> ,</p> <p>with te transportation of <span>@ViewBag.Transportation</span>.</p>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
